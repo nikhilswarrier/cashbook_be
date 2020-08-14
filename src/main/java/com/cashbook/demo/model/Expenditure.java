@@ -20,11 +20,9 @@ public class Expenditure {
 	private String particulars;
 
 	@GeneratedValue
-	private long vrNumber;
+	private int vrNumber;
 
-	private long amountAdjustment;
-
-	private long amountAnt;
+	private float amount;
 
 	public Integer getId() {
 		return id;
@@ -50,28 +48,21 @@ public class Expenditure {
 		this.particulars = particulars;
 	}
 
-	public long getVrNumber() {
+	public int getVrNumber() {
 		return vrNumber;
 	}
 
-	public void setVrNumber(long vrNumber) {
+	public void setVrNumber(int vrNumber) {
 		this.vrNumber = vrNumber;
 	}
 
-	public long getAmountAdjustment() {
-		return amountAdjustment;
+	public float getAmount() {
+		return amount;
 	}
 
-	public void setAmountAdjustment(long amountAdjustment) {
-		this.amountAdjustment = amountAdjustment;
+	public void setAmount(float amount) {
+		this.amount = amount;
 	}
 
-	public long getAmountAnt() {
-		return amountAnt;
-	}
-
-	public void setAmountAnt(long amountAnt) {
-		this.amountAnt = amountAnt;
-	}
-
+	
 }
