@@ -1,10 +1,16 @@
 package com.cashbook.demo.controller;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.InputStreamResource;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -17,6 +23,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cashbook.demo.config.GeneratePdfReport;
 import com.cashbook.demo.model.Income;
 import com.cashbook.demo.service.IncomeService;
 
@@ -66,6 +73,24 @@ public class IncomeController {
 	@DeleteMapping
 	public void deleteAll() {
 		incomeService.deleteAll();
-	}
+    }
+    
+    @GetMapping(value="/pdfreport", produces=MediaType.APPLICATION_PDF_VALUE)
+     public ResponseEntity<InputStreamResource> incomeReport() throws IOException {
+
+        List<Income> incomes = (List<Income>) incomeService.findAll();
+
+        ByteArrayInputStream bis = GeneratePdfReport.incomeReport(incomes);
+
+        HttpHeaders headers = new HttpHeaders();
+        headers.add("Content-Disposition", "inline; filename=citiesreport.pdf");
+
+        return ResponseEntity
+                .ok()
+                .headers(headers)
+                .contentType(MediaType.APPLICATION_PDF)
+                .body(new InputStreamResource(bis));
+    }
+
 
 }
