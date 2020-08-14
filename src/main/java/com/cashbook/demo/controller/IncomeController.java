@@ -68,9 +68,4 @@ public class IncomeController {
 		incomeService.deleteAll();
 	}
 
-	@ResponseStatus(HttpStatus.OK)
-	@GetMapping("total")
-	public int getTotal() {
-		return incomeService.getTotal();
-	}
 }

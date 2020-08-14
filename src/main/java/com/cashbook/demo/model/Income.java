@@ -28,9 +28,9 @@ public class Income {
 
 	private String particulars;
 	
-	private long vrNumber;
+	private int vrNumber;
 
-	private long amount;
+	private float amount;
 
 	public Integer getId() {
 		return id;
@@ -56,19 +56,19 @@ public class Income {
 		this.particulars = particulars;
 	}
 
-	public long getVrNumber() {
+	public int getVrNumber() {
 		return vrNumber;
 	}
 
-	public void setVrNumber(long vrNumber) {
+	public void setVrNumber(int vrNumber) {
 		this.vrNumber = vrNumber;
 	}
 
-	public long getAmount() {
+	public float getAmount() {
 		return amount;
 	}
 
-	public void setAmount(long amount) {
+	public void setAmount(float amount) {
 		this.amount = amount;
 	}
 
