@@ -18,12 +18,13 @@ import com.itextpdf.text.pdf.PdfWriter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-public class GeneratePdfReport {
+public class GeneratePdfReportIncome {
 
     public static final String RUPEE = "\u20B9";
 
     public static ByteArrayInputStream incomeReport(List<Income> incomes) {
 
+        float totalAMount=0;
         Document document = new Document();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
@@ -88,7 +89,30 @@ public class GeneratePdfReport {
                 cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
                 cell.setPaddingRight(5);
                 table.addCell(cell);
+
+                totalAMount+=income.getAmount();
             }
+
+             hcell = new PdfPCell(new Phrase());
+            hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(hcell);
+
+             hcell = new PdfPCell(new Phrase());
+            hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(hcell);
+
+             hcell = new PdfPCell(new Phrase("Total Amount", headFont));
+            hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(hcell);
+
+             hcell = new PdfPCell(new Phrase());
+            hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(hcell);
+
+             hcell = new PdfPCell(new Phrase(String.valueOf(totalAMount)));
+            hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            table.addCell(hcell);
+
 
             PdfWriter.getInstance(document, out);
             document.open();
@@ -98,7 +122,7 @@ public class GeneratePdfReport {
 
         } catch (DocumentException ex) {
 
-            Logger.getLogger(GeneratePdfReport.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(GeneratePdfReportIncome.class.getName()).log(Level.SEVERE, null, ex);
         }
 
         return new ByteArrayInputStream(out.toByteArray());
