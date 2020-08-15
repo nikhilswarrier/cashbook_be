@@ -20,7 +20,7 @@ import java.util.logging.Logger;
 
 public class GeneratePdfReportExpense {
 
-    public static final String RUPEE = "\u20B9";
+    public static final String RUPEE = "₹";
 
     public static ByteArrayInputStream expenseReport(List<Expenditure> expenditures) {
 
@@ -97,11 +97,11 @@ public class GeneratePdfReportExpense {
             hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(hcell);
 
-             hcell = new PdfPCell(new Phrase());
-            hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+             hcell = new PdfPCell(new Phrase("Total Amount", headFont));
+            hcell.setHorizontalAlignment(Element.ALIGN_LEFT);
             table.addCell(hcell);
 
-             hcell = new PdfPCell(new Phrase("Total Amount", headFont));
+             hcell = new PdfPCell(new Phrase());
             hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(hcell);
 
@@ -110,7 +110,7 @@ public class GeneratePdfReportExpense {
             table.addCell(hcell);
 
              hcell = new PdfPCell(new Phrase(String.valueOf(totalAMount)));
-            hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            hcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
             table.addCell(hcell);
 
 

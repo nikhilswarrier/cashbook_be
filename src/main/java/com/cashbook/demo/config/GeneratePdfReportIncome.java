@@ -20,7 +20,6 @@ import java.util.logging.Logger;
 
 public class GeneratePdfReportIncome {
 
-    public static final String RUPEE = "\u20B9";
 
     public static ByteArrayInputStream incomeReport(List<Income> incomes) {
 
@@ -84,7 +83,7 @@ public class GeneratePdfReportIncome {
                 cell.setPaddingRight(5);
                 table.addCell(cell);
 
-                cell = new PdfPCell(new Phrase(RUPEE + String.valueOf(income.getAmount())));
+                cell = new PdfPCell(new Phrase(" ₹ " + String.valueOf(income.getAmount())));
                 cell.setVerticalAlignment(Element.ALIGN_MIDDLE);
                 cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
                 cell.setPaddingRight(5);
@@ -97,11 +96,11 @@ public class GeneratePdfReportIncome {
             hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(hcell);
 
-             hcell = new PdfPCell(new Phrase());
-            hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+              hcell = new PdfPCell(new Phrase("Total Amount", headFont));
+            hcell.setHorizontalAlignment(Element.ALIGN_LEFT);
             table.addCell(hcell);
 
-             hcell = new PdfPCell(new Phrase("Total Amount", headFont));
+             hcell = new PdfPCell(new Phrase());
             hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(hcell);
 
@@ -110,7 +109,7 @@ public class GeneratePdfReportIncome {
             table.addCell(hcell);
 
              hcell = new PdfPCell(new Phrase(String.valueOf(totalAMount)));
-            hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            hcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
             table.addCell(hcell);
 
 
