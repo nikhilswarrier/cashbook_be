@@ -17,8 +17,6 @@ public class ExpenditureDTO {
 
     private float totalAmount;
 
-    private float cumulativeBalance;
-
 	public Integer getId() {
 		return id;
 	}

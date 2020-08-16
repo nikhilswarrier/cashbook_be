@@ -5,19 +5,20 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.cashbook.demo.model.Expenditure;
+import com.cashbook.demo.model.ExpenditureDTO;
 
 @Service
 public interface ExpenditureService {
-	List<Expenditure> findAll();
+    List<ExpenditureDTO> findAll();
 
-	Expenditure save(Expenditure expenditure);
+	ExpenditureDTO save(Expenditure expenditure);
 
-	Expenditure update(Expenditure expenditure);
+	ExpenditureDTO update(Expenditure expenditure);
 
 	void delete(int id);
 
 	void deleteAll();
 
-	Expenditure findById(int id);
+	ExpenditureDTO findById(int id);
 
 }

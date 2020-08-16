@@ -40,25 +40,25 @@ public class ExpenditureController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public List<Expenditure> getAllItems() {
+    public List<ExpenditureDTO> getAllItems() {
         return expenditureService.findAll();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Expenditure addIntoExpenditure(@RequestBody Expenditure expenditure) {
+    public ExpenditureDTO addIntoExpenditure(@RequestBody Expenditure expenditure) {
         return expenditureService.save(expenditure);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping
-    public Expenditure updateExpenditure(@RequestBody Expenditure expenditure) throws URISyntaxException {
+    public ExpenditureDTO updateExpenditure(@RequestBody Expenditure expenditure) throws URISyntaxException {
         return expenditureService.update(expenditure);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
-    public Expenditure findById(@PathVariable int id) {
+    public ExpenditureDTO findById(@PathVariable int id) {
         return expenditureService.findById(id);
     }
 
@@ -79,7 +79,7 @@ public class ExpenditureController {
     @GetMapping(value = "/pdfreport", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> incomeReport() throws IOException {
 
-        List<Expenditure> expenses = (List<Expenditure>) expenditureService.findAll();
+        List<ExpenditureDTO> expenses = (List<ExpenditureDTO>) expenditureService.findAll();
 
         ByteArrayInputStream bis = GeneratePdfReportExpense.expenseReport(expenses);
 

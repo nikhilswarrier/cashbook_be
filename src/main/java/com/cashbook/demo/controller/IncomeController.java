@@ -24,7 +24,6 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cashbook.demo.config.GeneratePdfReportIncome;
-import com.cashbook.demo.config.IncomeConverter;
 import com.cashbook.demo.model.Income;
 import com.cashbook.demo.model.IncomeDTO;
 import com.cashbook.demo.service.IncomeService;

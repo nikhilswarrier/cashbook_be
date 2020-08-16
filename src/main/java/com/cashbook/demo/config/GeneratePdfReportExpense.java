@@ -4,7 +4,7 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-import com.cashbook.demo.model.Expenditure;
+import com.cashbook.demo.model.ExpenditureDTO;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
@@ -22,7 +22,7 @@ public class GeneratePdfReportExpense {
 
     public static final String RUPEE = "₹";
 
-    public static ByteArrayInputStream expenseReport(List<Expenditure> expenditures) {
+    public static ByteArrayInputStream expenseReport(List<ExpenditureDTO> expenditures) {
 
         float totalAMount=0;
         Document document = new Document();
@@ -57,7 +57,7 @@ public class GeneratePdfReportExpense {
             hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(hcell);
 
-            for (Expenditure expenditure : expenditures) {
+            for (ExpenditureDTO expenditure : expenditures) {
 
                 PdfPCell cell;
 
