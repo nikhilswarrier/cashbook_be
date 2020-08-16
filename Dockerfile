@@ -18,3 +18,12 @@ ADD ${JAR_FILE} app.jar
 
 # Run the jar file 
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
+
+
+USER root
+
+# Install MySQL
+RUN apt-get update \
+ && apt-get install -y mysql-server \
+ && apt-get clean && rm -rf /var/cache/apt/* /var/lib/apt/lists/* /tmp/* \
+ && chown -R gitpod:gitpod /etc/mysql /var/run/mysqld /var/log/mysql /var/lib/mysql /var/lib/mysql-files /var/lib/mysql-keyring /var/lib/mysql-upgrade
