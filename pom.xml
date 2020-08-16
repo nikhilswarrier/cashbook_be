@@ -7,10 +7,10 @@
         <version>2.3.1.RELEASE</version>
     </parent>
     <groupId>com.cashbook</groupId>
-    <artifactId>demo</artifactId>
+    <artifactId>cashbook_be</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>demo</name>
-    <description>Demo project for Spring Boot</description>
+    <description>Cashbook project for Spring Boot</description>
 
     <properties>
         <java.version>1.8</java.version>
@@ -76,9 +76,9 @@
 		      <artifactId>heroku-maven-plugin</artifactId>
 		      <version>2.0.11</version>
 		      <configuration>
-		        <appName>cashbook_be</appName>
+		        <appName>evening-cove-95036</appName>
 		        <processTypes>
-		          <web>java $JAVA_OPTS -jar -Dserver.port=$PORT ${full-artifact-name}</web>
+		          <web>java $JAVA_OPTS -jar -Dserver.port=$PORT -jar target/cashbook_be-0.0.1-SNAPSHOT.jar</web>
 		        </processTypes>
 		      </configuration>
       		</plugin> 
