@@ -19,7 +19,6 @@ public class Expenditure {
 
 	private String particulars;
 
-	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int vrNumber;
 
 	private float amount;

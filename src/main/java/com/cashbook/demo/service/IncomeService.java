@@ -5,22 +5,21 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 
 import com.cashbook.demo.model.Income;
+import com.cashbook.demo.model.IncomeDTO;
 
 @Service
 public interface IncomeService {
 
-	List<Income> findAll();
+    List<IncomeDTO> findAll();
 
-	Income save(Income income);
+	IncomeDTO save(Income income);
 
-	Income update(Income income);
+	IncomeDTO update(Income income);
 
 	void delete(int incomeId);
 
 	void deleteAll();
 
-	Income findById(int id);
-
-	int getTotal();
+	IncomeDTO findById(int id);
 
 }

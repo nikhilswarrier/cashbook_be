@@ -4,15 +4,18 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.List;
 
-import com.cashbook.demo.model.Income;
+import com.cashbook.demo.model.IncomeDTO;
 import com.itextpdf.text.Document;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.Element;
 import com.itextpdf.text.Font;
 import com.itextpdf.text.FontFactory;
 import com.itextpdf.text.Phrase;
+import com.itextpdf.text.Rectangle;
+import com.itextpdf.text.pdf.ColumnText;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfPageEventHelper;
 import com.itextpdf.text.pdf.PdfWriter;
 
 import java.util.logging.Level;
@@ -20,10 +23,10 @@ import java.util.logging.Logger;
 
 public class GeneratePdfReportIncome {
 
+    public static ByteArrayInputStream incomeReport(List<IncomeDTO> incomes) {
 
-    public static ByteArrayInputStream incomeReport(List<Income> incomes) {
-
-        float totalAMount=0;
+        IncomeDTO iDto;
+        float totalAMount, cumulative;
         Document document = new Document();
         ByteArrayOutputStream out = new ByteArrayOutputStream();
 
@@ -31,9 +34,16 @@ public class GeneratePdfReportIncome {
 
             PdfPTable table = new PdfPTable(5);
             table.setWidthPercentage(90);
-            table.setWidths(new int[] { 1, 2, 3, 3, 2 });
+            table.setWidths(new int[] { 1, 3, 3, 3, 2 });
 
-            Font headFont = FontFactory.getFont(FontFactory.TIMES_ROMAN);
+            Font headFont = FontFactory.getFont(FontFactory.COURIER);
+
+            PdfWriter writer = PdfWriter.getInstance(document, out);
+            PdfHeader event = new PdfHeader();
+            writer.setPageEvent(event);
+            document.open();
+            document.addTitle("Income Report");
+            document.addAuthor("Income Report");
 
             PdfPCell hcell;
             hcell = new PdfPCell(new Phrase("Id", headFont));
@@ -56,7 +66,7 @@ public class GeneratePdfReportIncome {
             hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
             table.addCell(hcell);
 
-            for (Income income : incomes) {
+            for (IncomeDTO income : incomes) {
 
                 PdfPCell cell;
 
@@ -88,33 +98,28 @@ public class GeneratePdfReportIncome {
                 cell.setHorizontalAlignment(Element.ALIGN_RIGHT);
                 cell.setPaddingRight(5);
                 table.addCell(cell);
-
-                totalAMount+=income.getAmount();
             }
 
-             hcell = new PdfPCell(new Phrase());
-            hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
+            iDto = incomes.get(0);
+            totalAMount = iDto.getAmount();
+            cumulative = iDto.getCumulativeBalance();
+
+            hcell = new PdfPCell(new Phrase("Total Amount", headFont));
+            hcell.setColspan(4);
             table.addCell(hcell);
 
-              hcell = new PdfPCell(new Phrase("Total Amount", headFont));
-            hcell.setHorizontalAlignment(Element.ALIGN_LEFT);
-            table.addCell(hcell);
-
-             hcell = new PdfPCell(new Phrase());
-            hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-            table.addCell(hcell);
-
-             hcell = new PdfPCell(new Phrase());
-            hcell.setHorizontalAlignment(Element.ALIGN_CENTER);
-            table.addCell(hcell);
-
-             hcell = new PdfPCell(new Phrase(String.valueOf(totalAMount)));
+            hcell = new PdfPCell(new Phrase(String.valueOf(totalAMount)));
             hcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
             table.addCell(hcell);
 
+            hcell = new PdfPCell(new Phrase("Cumulative Balance", headFont));
+            hcell.setColspan(4);
+            table.addCell(hcell);
 
-            PdfWriter.getInstance(document, out);
-            document.open();
+            hcell = new PdfPCell(new Phrase(String.valueOf(cumulative)));
+            hcell.setHorizontalAlignment(Element.ALIGN_RIGHT);
+            table.addCell(hcell);
+
             document.add(table);
 
             document.close();
@@ -126,4 +131,23 @@ public class GeneratePdfReportIncome {
 
         return new ByteArrayInputStream(out.toByteArray());
     }
+
+    public static class PdfHeader extends PdfPageEventHelper {
+
+        @Override
+        public void onEndPage(PdfWriter writer, Document document) {
+            try {
+                Rectangle pageSize = document.getPageSize();
+                ColumnText.showTextAligned(writer.getDirectContent(),Element.TITLE, new Phrase("Income Report",FontFactory.getFont(FontFactory.HELVETICA_BOLDOBLIQUE)),
+                        pageSize.getLeft(275), pageSize.getTop(30), 0);
+
+                 ColumnText.showTextAligned(writer.getDirectContent(), Element.ALIGN_CENTER, new Phrase(),
+                        pageSize.getLeft(275), pageSize.getTop(30), 0);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 }

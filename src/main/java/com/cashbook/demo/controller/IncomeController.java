@@ -24,7 +24,9 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.cashbook.demo.config.GeneratePdfReportIncome;
+import com.cashbook.demo.config.IncomeConverter;
 import com.cashbook.demo.model.Income;
+import com.cashbook.demo.model.IncomeDTO;
 import com.cashbook.demo.service.IncomeService;
 
 import lombok.RequiredArgsConstructor;
@@ -41,25 +43,25 @@ public class IncomeController {
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping
-    public List<Income> getAllItems() {
+    public List<IncomeDTO> getAllItems() {
         return incomeService.findAll();
     }
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping
-    public Income addIntoIncome(@RequestBody Income income) {
+    public IncomeDTO addIntoIncome(@RequestBody Income income) {
         return incomeService.save(income);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @PutMapping
-    public Income updateIncome(@RequestBody Income income) throws URISyntaxException {
+    public IncomeDTO updateIncome(@RequestBody Income income) throws URISyntaxException {
         return incomeService.update(income);
     }
 
     @ResponseStatus(HttpStatus.OK)
     @GetMapping("/{id}")
-    public Income findById(@PathVariable int id) {
+    public IncomeDTO findById(@PathVariable int id) {
         return incomeService.findById(id);
     }
 
@@ -78,7 +80,7 @@ public class IncomeController {
     @GetMapping(value = "/pdfreport", produces = MediaType.APPLICATION_PDF_VALUE)
     public ResponseEntity<InputStreamResource> incomeReport() throws IOException {
 
-        List<Income> incomes = (List<Income>) incomeService.findAll();
+        List<IncomeDTO> incomes =(List<IncomeDTO>) incomeService.findAll();
 
         ByteArrayInputStream bis = GeneratePdfReportIncome.incomeReport(incomes);
 

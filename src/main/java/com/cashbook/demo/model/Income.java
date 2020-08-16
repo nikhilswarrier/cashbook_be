@@ -11,6 +11,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import lombok.NonNull;
+
 /**
  * @author Nikhil S Warrier 
  * Table for Income part of 
@@ -27,7 +29,8 @@ public class Income {
 	private Date date;
 
 	private String particulars;
-	
+    
+    @NonNull
 	private int vrNumber;
 
 	private float amount;
@@ -37,7 +40,8 @@ public class Income {
 	}
 
 	public void setId(Integer id) {
-		this.id = id;
+        this.id = id;
+        
 	}
 
 	public Date getDate() {
